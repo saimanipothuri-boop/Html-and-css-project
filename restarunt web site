@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruchi's - Authentic North & South Indian Flavors</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        saffron: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        },
+                        maroon: {
+                            700: '#800020',
+                            800: '#5c0017',
+                            900: '#3d000f',
+                        },
+                        curry: {
+                            500: '#e65100',
+                            600: '#bf360c'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 4px;
+        }
+        
+        /* Print styles for printing standard menu card */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .print-card {
+                break-inside: avoid;
+                border: 1px solid #e5e7eb !important;
+                box-shadow: none !important;
+            }
+            .print-header {
+                background: white !important;
+                color: black !important;
+                border-bottom: 2px solid #b45309;
+            }
+        }
+    </style>
+</head>
+<body class="bg-amber-50/40 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-saffron-500 selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-maroon-800 via-curry-600 to-maroon-800 text-amber-100 text-xs py-2 px-4 text-center font-medium shadow-sm no-print">
+        <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2">
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-utensils text-saffron-500"></i> Authentic North & South Indian Fine Dining</span>
+            <span class="hidden sm:inline">📍 104 Heritage Boulevard, Culinary Hub | 📞 +91 98765 43210</span>
+            <span class="bg-amber-100/20 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider font-semibold">✨ Open Today: 11:00 AM - 11:00 PM</span>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-amber-200/60 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+            
+            <!-- Logo Section -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-saffron-600 via-amber-500 to-maroon-700 flex items-center justify-center text-white shadow-md font-serif text-2xl font-bold border-2 border-amber-300">
+                    R
+                </div>
+                <div>
+                    <h1 class="font-serif text-2xl sm:text-3xl font-extrabold text-maroon-800 tracking-tight flex items-center gap-2">
+                        Ruchi's
+                        <span class="text-xs font-sans font-semibold bg-saffron-100 text-saffron-700 px-2 py-0.5 rounded-full border border-saffron-300">Flavors of India</span>
+                    </h1>
+                    <p class="text-xs text-slate-500 font-medium tracking-wide">NORTH & SOUTH INDIAN SPECIALTIES</p>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- GitHub Deployment Guide Button -->
+                <button onclick="toggleModal('githubModal')" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg transition">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span>GitHub Code Guide</span>
+                </button>
+
+                <!-- Print Menu Button -->
+                <button onclick="window.print()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-maroon-800 bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-lg transition">
+                    <i class="fa-solid fa-print"></i>
+                    <span class="hidden sm:inline">Print Menu</span>
+                </button>
+
+                <!-- Order Cart Drawer Toggle -->
+                <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-saffron-600 to-maroon-700 hover:from-saffron-700 hover:to-maroon-800 text-white rounded-lg shadow-md transition font-medium text-sm">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span class="hidden sm:inline">My Plate</span>
+                    <span id="cartCountBadge" class="bg-white text-maroon-800 font-bold text-xs rounded-full w-5 h-5 flex items-center justify-center shadow">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="relative bg-gradient-to-b from-maroon-900 via-maroon-800 to-amber-950 text-white py-12 px-4 overflow-hidden no-print">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-medium mb-4">
+                <i class="fa-solid fa-pepper-hot text-saffron-500"></i> Culinary Harmony of North & South
+            </div>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold tracking-wide leading-tight mb-4 text-amber-100">
+                Experience Authentic Indian Gastronomy
+            </h2>
+            <p class="text-amber-200/90 max-w-2xl mx-auto text-sm sm:text-base mb-8 leading-relaxed">
+                From crispy South Indian Dosas & aromatic Filter Coffee to rich North Indian Dal Makhani & buttery Tandoori Naans. Crafted with authentic hand-ground spices and heritage recipes.
+            </p>
+
+            <!-- Quick Regional Jump Links -->
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <button onclick="filterByStyle('South Indian')" class="px-5 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-semibold flex items-center gap-2 transition backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-green-400"></span> South Indian Delights
+                </button>
+                <button onclick="filterByStyle('North Indian')" class="px-5 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-semibold flex items-center gap-2 transition backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-orange-400"></span> North Indian Classics
+                </button>
+                <button onclick="filterByStyle('All')" class="px-5 py-2.5 rounded-full bg-white text-maroon-900 font-semibold text-xs sm:text-sm flex items-center gap-2 transition hover:bg-amber-100 shadow-lg">
+                    View Complete Menu
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Bar & Search Section -->
+    <section class="sticky top-[73px] z-30 bg-amber-50/95 backdrop-blur-md border-b border-amber-200 shadow-sm py-4 px-4 no-print">
+        <div class="max-w-7xl mx-auto space-y-3">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                
+                <!-- Search Input -->
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search dishes (e.g. Dosa, Paneer, Biryani)..." 
+                        class="w-full pl-10 pr-4 py-2 text-sm bg-white border border-amber-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-saffron-500/50 focus:border-saffron-500 transition shadow-sm">
+                </div>
+
+                <!-- Cuisine Style Tabs -->
+                <div class="flex items-center bg-amber-200/60 p-1 rounded-xl w-full md:w-auto overflow-x-auto">
+                    <button onclick="filterByStyle('All')" id="style-btn-All" class="style-tab active-tab px-4 py-1.5 rounded-lg text-xs font-bold transition flex-1 md:flex-none text-center">
+                        All Styles
+                    </button>
+                    <button onclick="filterByStyle('South Indian')" id="style-btn-South Indian" class="style-tab px-4 py-1.5 rounded-lg text-xs font-bold transition flex-1 md:flex-none text-center flex items-center justify-center gap-1">
+                        🌴 South Style
+                    </button>
+                    <button onclick="filterByStyle('North Indian')" id="style-btn-North Indian" class="style-tab px-4 py-1.5 rounded-lg text-xs font-bold transition flex-1 md:flex-none text-center flex items-center justify-center gap-1">
+                        🏔️ North Style
+                    </button>
+                </div>
+
+                <!-- Veg / Non-Veg Diet Filter -->
+                <div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-amber-200 shadow-sm text-xs font-medium">
+                    <span class="text-slate-500 font-semibold">Diet:</span>
+                    <button onclick="toggleDietFilter('all')" id="diet-all" class="diet-badge bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-lg">All</button>
+                    <button onclick="toggleDietFilter('veg')" id="diet-veg" class="diet-badge text-emerald-700 hover:bg-emerald-50 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                        <span class="w-2.5 h-2.5 rounded-full border-2 border-emerald-600 flex items-center justify-center"><span class="w-1 h-1 bg-emerald-600 rounded-full"></span></span> Veg
+                    </button>
+                    <button onclick="toggleDietFilter('nonveg')" id="diet-nonveg" class="diet-badge text-red-700 hover:bg-red-50 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                        <span class="w-2.5 h-2.5 rounded-full border-2 border-red-600 flex items-center justify-center"><span class="w-1 h-1 bg-red-600 rounded-full"></span></span> Non-Veg
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Detailed Food Categories -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 text-xs no-scrollbar">
+                <button onclick="filterByCategory('All')" class="cat-btn bg-maroon-800 text-white font-semibold px-4 py-1.5 rounded-full whitespace-nowrap shadow-sm">
+                    Full Menu
+                </button>
+                <button onclick="filterByCategory('Starters')" class="cat-btn bg-white hover:bg-amber-100 text-slate-700 font-medium px-4 py-1.5 rounded-full border border-amber-200 whitespace-nowrap">
+                    🍢 Starters & Appetizers
+                </button>
+                <button onclick="filterByCategory('South Main')" class="cat-btn bg-white hover:bg-amber-100 text-slate-700 font-medium px-4 py-1.5 rounded-full border border-amber-200 whitespace-nowrap">
+                    🥞 Dosas, Idlis & Tiffins
+                </button>
+                <button onclick="filterByCategory('North Main')" class="cat-btn bg-white hover:bg-amber-100 text-slate-700 font-medium px-4 py-1.5 rounded-full border border-amber-200 whitespace-nowrap">
+                    🍲 North Curries & Gravies
+                </button>
+                <button onclick="filterByCategory('Breads & Rice')" class="cat-btn bg-white hover:bg-amber-100 text-slate-700 font-medium px-4 py-1.5 rounded-full border border-amber-200 whitespace-nowrap">
+                    🫓 Breads & Biryanis
+                </button>
+                <button onclick="filterByCategory('Desserts & Beverages')" class="cat-btn bg-white hover:bg-amber-100 text-slate-700 font-medium px-4 py-1.5 rounded-full border border-amber-200 whitespace-nowrap">
+                    ☕ Desserts & Filter Coffee
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Active Filter Indicator Bar -->
+        <div class="flex items-center justify-between mb-6 border-b border-amber-200/80 pb-3">
+            <div>
+                <h3 id="currentCategoryTitle" class="font-serif text-2xl font-bold text-maroon-900">Full Menu Highlights</h3>
+                <p id="itemCountSubtext" class="text-xs text-slate-500">Showing all authentic dishes</p>
+            </div>
+            <div class="text-xs text-slate-500 font-medium">
+                <span id="resultCount">0</span> items listed
+            </div>
+        </div>
+
+        <!-- Menu Items Grid -->
+        <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic JavaScript Content injected here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-amber-300 p-8 my-8">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-utensils"></i>
+            </div>
+            <h4 class="font-serif text-xl font-bold text-slate-800 mb-2">No matching items found</h4>
+            <p class="text-slate-500 text-sm mb-4">Try resetting your filters or search keywords to explore more delicious options from Ruchi's.</p>
+            <button onclick="resetFilters()" class="px-4 py-2 bg-saffron-600 text-white rounded-lg font-medium text-xs shadow hover:bg-saffron-700 transition">
+                Reset Filters
+            </button>
+        </div>
+
+    </main>
+
+    <!-- GitHub Push Instruction Modal -->
+    <div id="githubModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 relative">
+            <button onclick="toggleModal('githubModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-xl">
+                    <i class="fa-brands fa-github"></i>
+                </div>
+                <div>
+                    <h3 class="font-serif text-xl font-bold text-slate-900">Push "Ruchi's Menu" to GitHub</h3>
+                    <p class="text-xs text-slate-500">Deploy this menu card for free via GitHub Pages in 4 easy steps</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+                <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                    <p class="font-semibold text-amber-900">📁 File Saved:</p>
+                    <p class="text-slate-600">Save this entire code block as <code class="bg-amber-200/60 px-1 py-0.5 rounded font-mono text-amber-900">index.html</code> inside your local folder.</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-slate-800 text-sm">Step-by-step Git Terminal Commands:</h4>
+                    
+                    <div class="bg-slate-900 text-emerald-400 font-mono p-3 rounded-lg overflow-x-auto space-y-1 text-[11px]">
+                        <p class="text-slate-400"># 1. Initialize new Git repository</p>
+                        <p>git init</p>
+                        <br>
+                        <p class="text-slate-400"># 2. Add files and make initial commit</p>
+                        <p>git add index.html</p>
+                        <p>git commit -m "Add Ruchi's North & South Indian Menu Card"</p>
+                        <br>
+                        <p class="text-slate-400"># 3. Create a main branch & link to your GitHub repo</p>
+                        <p>git branch -M main</p>
+                        <p>git remote add origin https://github.com/YOUR_USERNAME/ruchis-restaurant-menu.git</p>
+                        <br>
+                        <p class="text-slate-400"># 4. Push code to GitHub</p>
+                        <p>git push -u origin main</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-3">
+                    <h4 class="font-bold text-slate-800 mb-1">🌐 Publish via GitHub Pages (Free Hosting):</h4>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                        <li>Go to your GitHub repository settings.</li>
+                        <li>Navigate to <strong>Pages</strong> in the left sidebar.</li>
+                        <li>Under <strong>Source</strong>, select <code class="bg-slate-100 px-1 rounded">main</code> branch and folder <code class="bg-slate-100 px-1 rounded">/(root)</code>.</li>
+                        <li>Click <strong>Save</strong>. Your menu site will be live at: <br><code class="text-saffron-700 font-mono">https://YOUR_USERNAME.github.io/ruchis-restaurant-menu/</code></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button onclick="toggleModal('githubModal')" class="px-5 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 transition">
+                    Got it, close!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart / Bill Summary Drawer -->
+    <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col no-print">
+        
+        <!-- Drawer Header -->
+        <div class="p-4 bg-maroon-900 text-white flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-receipt text-saffron-500"></i>
+                <h3 class="font-serif font-bold text-lg">Your Order Preview</h3>
+            </div>
+            <button onclick="toggleCartDrawer()" class="text-white/80 hover:text-white w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Drawer Items List -->
+        <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-4 divide-y divide-slate-100 space-y-3">
+            <div id="emptyCartMessage" class="text-center py-12 text-slate-400">
+                <i class="fa-solid fa-basket-shopping text-4xl mb-2 text-slate-300"></i>
+                <p class="text-sm">Your plate is currently empty.</p>
+                <p class="text-xs text-slate-400 mt-1">Tap standard dishes to add to your order estimation.</p>
+            </div>
+        </div>
+
+        <!-- Drawer Footer & Calculation -->
+        <div class="p-4 bg-slate-50 border-t border-slate-200 space-y-2">
+            <div class="flex justify-between text-xs text-slate-600">
+                <span>Subtotal</span>
+                <span id="cartSubtotal" class="font-semibold">₹0</span>
+            </div>
+            <div class="flex justify-between text-xs text-slate-600">
+                <span>GST (5% Restaurant Tax)</span>
+                <span id="cartTax" class="font-semibold">₹0</span>
+            </div>
+            <div class="border-t border-slate-200 pt-2 flex justify-between text-sm font-bold text-slate-900">
+                <span>Estimated Total</span>
+                <span id="cartTotal" class="text-saffron-700">₹0</span>
+            </div>
+
+            <div class="pt-2 flex gap-2">
+                <button onclick="clearCart()" class="w-1/3 py-2 text-xs font-semibold text-slate-600 bg-slate-200 hover:bg-slate-300 rounded-lg transition">
+                    Clear
+                </button>
+                <button onclick="copyOrderSummary()" class="w-2/3 py-2 text-xs font-semibold text-white bg-saffron-600 hover:bg-saffron-700 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-copy"></i> Copy Bill Summary
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-maroon-900 text-amber-100/90 py-10 border-t border-amber-900 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
+            
+            <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-saffron-600 text-white flex items-center justify-center font-serif text-lg font-bold">R</div>
+                    <span class="font-serif text-xl font-bold text-amber-100">Ruchi's Restaurant</span>
+                </div>
+                <p class="text-amber-200/70 leading-relaxed">
+                    Celebrating the rich culinary traditions of North and South India. Prepared fresh daily with traditional ghee, authentic spices, and passion.
+                </p>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-serif text-sm font-bold text-saffron-500 uppercase tracking-wider">Restaurant Hours & Location</h4>
+                <p class="flex items-center gap-2"><i class="fa-solid fa-clock text-amber-400"></i> Mon - Sun: 11:00 AM - 11:00 PM</p>
+                <p class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-amber-400"></i> 104 Heritage Boulevard, Gourmet Street</p>
+                <p class="flex items-center gap-2"><i class="fa-solid fa-phone text-amber-400"></i> Reservations: +91 98765 43210</p>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="font-serif text-sm font-bold text-saffron-500 uppercase tracking-wider">Specialties Highlights</h4>
+                <div class="flex flex-wrap gap-1.5 text-[11px]">
+                    <span class="bg-amber-100/10 border border-amber-400/20 px-2 py-0.5 rounded">Ghee Mysore Dosa</span>
+                    <span class="bg-amber-100/10 border border-amber-400/20 px-2 py-0.5 rounded">Dal Makhani</span>
+                    <span class="bg-amber-100/10 border border-amber-400/20 px-2 py-0.5 rounded">Butter Naan</span>
+                    <span class="bg-amber-100/10 border border-amber-400/20 px-2 py-0.5 rounded">Hyderabadi Dum Biryani</span>
+                    <span class="bg-amber-100/10 border border-amber-400/20 px-2 py-0.5 rounded">Filter Coffee</span>
+                </div>
+                <p class="text-[11px] text-amber-300/60 pt-2">© 2026 Ruchi's Restaurant. Ready for GitHub Deployment.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        // Comprehensive Dataset for Ruchi's North & South Indian Menu
+        const menuItems = [
+            // --- SOUTH INDIAN SPECIALTIES ---
+            {
+                id: 101,
+                name: "Authentic Mysore Masala Dosa",
+                style: "South Indian",
+                category: "South Main",
+                price: 180,
+                isVeg: true,
+                spiceLevel: 2, // 1 to 3
+                isBestseller: true,
+                description: "Crispy golden crepe smeared with spicy red garlic chutney, filled with tempered potato masala. Served with 3 coconut chutneys and hot sambar.",
+                image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 102,
+                name: "Ghee Roast Paper Masala Dosa",
+                style: "South Indian",
+                category: "South Main",
+                price: 210,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: false,
+                description: "Extra long, paper-thin crispy dosa roasted generously with pure desi ghee, served with spiced potato bhaji and signature chutneys.",
+                image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 103,
+                name: "Steamed Idli & Crispy Medu Vada Combo",
+                style: "South Indian",
+                category: "South Main",
+                price: 140,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: true,
+                description: "2 melt-in-mouth fluffy steamed rice cakes & 2 golden crispy lentil donuts served with piping hot drumstick sambar.",
+                image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 104,
+                name: "Onion Tomato Uttapam",
+                style: "South Indian",
+                category: "South Main",
+                price: 170,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: false,
+                description: "Thick savory rice pancake topped with finely chopped juicy tomatoes, fresh onions, green chillies, and coriander.",
+                image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 105,
+                name: "Chettinad Spicy Paneer Curry",
+                style: "South Indian",
+                category: "South Main",
+                price: 320,
+                isVeg: true,
+                spiceLevel: 3,
+                isBestseller: true,
+                description: "Cottage cheese cubes simmered in traditional Karaikudi spices, toasted coconut paste, star anise, and curry leaves.",
+                image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 106,
+                name: "Chettinad Pepper Chicken Gravy",
+                style: "South Indian",
+                category: "South Main",
+                price: 380,
+                isVeg: false,
+                spiceLevel: 3,
+                isBestseller: true,
+                description: "Tender chicken cooked in roasted black pepper, fennel, shallots, and freshly ground Chettinad masala gravy.",
+                image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80"
+            },
+
+            // --- NORTH INDIAN SPECIALTIES ---
+            {
+                id: 201,
+                name: "Ruchi's Special Paneer Butter Masala",
+                style: "North Indian",
+                category: "North Main",
+                price: 340,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: true,
+                description: "Soft fresh paneer cubes cooked in rich, velvety tomato butter cashew gravy infused with aromatic kasuri methi.",
+                image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 202,
+                name: "Slow-Cooked Dal Makhani",
+                style: "North Indian",
+                category: "North Main",
+                price: 290,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: true,
+                description: "Whole black lentils and kidney beans simmered overnight on slow coal fire, finished with butter and fresh cream.",
+                image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 203,
+                name: "Old Delhi Murgh Makhani (Butter Chicken)",
+                style: "North Indian",
+                category: "North Main",
+                price: 420,
+                isVeg: false,
+                spiceLevel: 2,
+                isBestseller: true,
+                description: "Tandoori grilled chicken tikka morsels cooked in a silky, creamy tomato gravy with aromatic spices and butter.",
+                image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 204,
+                name: "Amritsari Chole Bhature Combo",
+                style: "North Indian",
+                category: "North Main",
+                price: 220,
+                isVeg: true,
+                spiceLevel: 2,
+                isBestseller: false,
+                description: "Spicy dark chickpea curry tempered with tea leaves & ginger, served with 2 fluffy golden bhaturas, pickled onions.",
+                image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 205,
+                name: "Kashmiri Mutton Rogan Josh",
+                style: "North Indian",
+                category: "North Main",
+                price: 490,
+                isVeg: false,
+                spiceLevel: 2,
+                isBestseller: false,
+                description: "Succulent mutton slow-braised in Kashmiri red chilli, yogurt, alkanet root, and whole spices gravy.",
+                image: "https://images.unsplash.com/photo-1545247181-516773cae754?auto=format&fit=crop&w=600&q=80"
+            },
+
+            // --- STARTERS & TANDOOR ---
+            {
+                id: 301,
+                name: "Tandoori Paneer Tikka",
+                style: "North Indian",
+                category: "Starters",
+                price: 280,
+                isVeg: true,
+                spiceLevel: 2,
+                isBestseller: true,
+                description: "Paneer cubes marinated in hung curd, mustard oil, and tandoori spices, char-grilled in clay oven with bell peppers.",
+                image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 302,
+                name: "Classic Tandoori Murgh (Half)",
+                style: "North Indian",
+                category: "Starters",
+                price: 360,
+                isVeg: false,
+                spiceLevel: 2,
+                isBestseller: false,
+                description: "Bone-in chicken marinated overnight in Kashmiri chilli, garam masala & yogurt, roasted in clay oven till juicy.",
+                image: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 303,
+                name: "Crispy Andhra Chili Chicken",
+                style: "South Indian",
+                category: "Starters",
+                price: 340,
+                isVeg: false,
+                spiceLevel: 3,
+                isBestseller: true,
+                description: "South Indian tavern style tender chicken bits tossed with fiery green chillies, curry leaves, and garlic.",
+                image: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=600&q=80"
+            },
+
+            // --- BREADS & BIRYANIS ---
+            {
+                id: 401,
+                name: "Butter Garlic Naan",
+                style: "North Indian",
+                category: "Breads & Rice",
+                price: 75,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: true,
+                description: "Leavened flatbread topped with minced fresh garlic and cilantro, baked in tandoor and brushed with butter.",
+                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 402,
+                name: "Hyderabadi Veg Dum Biryani",
+                style: "South Indian",
+                category: "Breads & Rice",
+                price: 280,
+                isVeg: true,
+                spiceLevel: 2,
+                isBestseller: true,
+                description: "Long grain Basmati rice layered with garden vegetables, saffron milk, fried onions & mint cooked under Dum seal.",
+                image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 403,
+                name: "Lucknowi Chicken Dum Biryani",
+                style: "North Indian",
+                category: "Breads & Rice",
+                price: 380,
+                isVeg: false,
+                spiceLevel: 2,
+                isBestseller: true,
+                description: "Fragrant basmati rice slow cooked with marinated tender chicken pieces, kewra water, and whole aromatic spices.",
+                image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=600&q=80"
+            },
+
+            // --- DESSERTS & BEVERAGES ---
+            {
+                id: 501,
+                name: "South Indian Filter Kaapi",
+                style: "South Indian",
+                category: "Desserts & Beverages",
+                price: 60,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: true,
+                description: "Traditional chicory-blended coffee brewed in a brass filter, frothed with hot boiled milk. Served in a Davarah cup.",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 502,
+                name: "Warm Gulab Jamun with Rabri",
+                style: "North Indian",
+                category: "Desserts & Beverages",
+                price: 130,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: false,
+                description: "2 soft khoya dumplings soaked in cardamom sugar syrup, topped with thick chilled saffron rabri.",
+                image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 503,
+                name: "Thandai Kesar Mango Lassi",
+                style: "North Indian",
+                category: "Desserts & Beverages",
+                price: 120,
+                isVeg: true,
+                spiceLevel: 1,
+                isBestseller: true,
+                description: "Creamy churned yogurt drink blended with Alphonso mango pulp, saffron strands, and crushed pistachios.",
+                image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        // Application State
+        let currentStyle = 'All';
+        let currentCategory = 'All';
+        let currentDiet = 'all'; // 'all', 'veg', 'nonveg'
+        let searchQuery = '';
+        let cart = [];
+
+        // DOM Element references
+        const menuGrid = document.getElementById('menuGrid');
+        const emptyState = document.getElementById('emptyState');
+        const resultCount = document.getElementById('resultCount');
+        const currentCategoryTitle = document.getElementById('currentCategoryTitle');
+
+        // Main function to render menu cards
+        function renderMenu() {
+            let filtered = menuItems.filter(item => {
+                // Style filter (North vs South)
+                if (currentStyle !== 'All' && item.style !== currentStyle) return false;
+                
+                // Category filter
+                if (currentCategory !== 'All' && item.category !== currentCategory) return false;
+
+                // Diet filter
+                if (currentDiet === 'veg' && !item.isVeg) return false;
+                if (currentDiet === 'nonveg' && item.isVeg) return false;
+
+                // Search Query
+                if (searchQuery.trim() !== '') {
+                    const q = searchQuery.toLowerCase();
+                    const matchName = item.name.toLowerCase().includes(q);
+                    const matchDesc = item.description.toLowerCase().includes(q);
+                    const matchStyle = item.style.toLowerCase().includes(q);
+                    if (!matchName && !matchDesc && !matchStyle) return false;
+                }
+
+                return true;
+            });
+
+            // Update counter
+            resultCount.innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                menuGrid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            menuGrid.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            menuGrid.innerHTML = filtered.map(item => createMenuCardHTML(item)).join('');
+        }
+
+        // Generate individual HTML card
+        function createMenuCardHTML(item) {
+            // Spice rating flames
+            const spiceFlames = Array(item.spiceLevel).fill('🌶️').join('');
+            
+            // Veg / Non-Veg Icon
+            const dietIcon = item.isVeg 
+                ? `<span class="w-4 h-4 border-2 border-emerald-600 p-0.5 flex items-center justify-center rounded-sm bg-white" title="Pure Vegetarian"><span class="w-2 h-2 bg-emerald-600 rounded-full"></span></span>`
+                : `<span class="w-4 h-4 border-2 border-red-600 p-0.5 flex items-center justify-center rounded-sm bg-white" title="Non-Vegetarian"><span class="w-2 h-2 bg-red-600 rounded-full"></span></span>`;
+
+            // Style Badge Tag
+            const styleBadge = item.style === 'South Indian' 
+                ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-300">🌴 South Style</span>`
+                : `<span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-300">🏔️ North Style</span>`;
+
+            // Bestseller badge
+            const bestsellerBadge = item.isBestseller 
+                ? `<span class="bg-gradient-to-r from-saffron-500 to-amber-600 text-white font-bold text-[10px] px-2 py-0.5 rounded-full shadow-sm">★ Bestseller</span>`
+                : '';
+
+            return `
+                <div class="print-card bg-white rounded-2xl border border-amber-200/70 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Image & Top Badges -->
+                        <div class="relative h-44 overflow-hidden bg-slate-100">
+                            <img src="${item.image}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                            
+                            <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                                ${dietIcon}
+                                ${bestsellerBadge}
+                            </div>
+
+                            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+                                ${styleBadge}
+                                <span class="text-xs font-semibold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded text-amber-200" title="Spice level">${spiceFlames}</span>
+                            </div>
+                        </div>
+
+                        <!-- Details Section -->
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-start justify-between gap-2">
+                                <h4 class="font-serif font-bold text-base text-slate-900 group-hover:text-maroon-800 transition">${item.name}</h4>
+                                <span class="font-sans font-extrabold text-base text-maroon-800 whitespace-nowrap">₹${item.price}</span>
+                            </div>
+                            <p class="text-slate-600 text-xs line-clamp-2 leading-relaxed">${item.description}</p>
+                        </div>
+                    </div>
+
+                    <!-- Add to Plate Button -->
+                    <div class="px-4 pb-4 pt-1 no-print">
+                        <button onclick="addToCart(${item.id})" class="w-full py-2 bg-amber-100 hover:bg-saffron-600 hover:text-white text-maroon-800 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition duration-200 shadow-sm active:scale-[0.98]">
+                            <i class="fa-solid fa-plus text-xs"></i> Add to Order Plate
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Filtering handlers
+        function filterByStyle(style) {
+            currentStyle = style;
+            document.querySelectorAll('.style-tab').forEach(btn => btn.classList.remove('active-tab', 'bg-maroon-800', 'text-white'));
+            
+            const activeBtn = document.getElementById(`style-btn-${style}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-maroon-800', 'text-white');
+            }
+
+            updateTitleText();
+            renderMenu();
+        }
+
+        function filterByCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-maroon-800', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+            event.target.classList.remove('bg-white', 'text-slate-700');
+            event.target.classList.add('bg-maroon-800', 'text-white');
+
+            updateTitleText();
+            renderMenu();
+        }
+
+        function toggleDietFilter(type) {
+            currentDiet = type;
+            document.querySelectorAll('.diet-badge').forEach(b => b.classList.remove('bg-amber-100', 'text-amber-800', 'font-bold'));
+            document.getElementById(`diet-${type}`).classList.add('bg-amber-100', 'text-amber-800', 'font-bold');
+            renderMenu();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value;
+            renderMenu();
+        }
+
+        function resetFilters() {
+            currentStyle = 'All';
+            currentCategory = 'All';
+            currentDiet = 'all';
+            searchQuery = '';
+            document.getElementById('searchInput').value = '';
+            filterByStyle('All');
+        }
+
+        function updateTitleText() {
+            if (currentStyle === 'All' && currentCategory === 'All') {
+                currentCategoryTitle.innerText = "Full Menu Highlights";
+            } else if (currentStyle !== 'All') {
+                currentCategoryTitle.innerText = `${currentStyle} Specialties`;
+            } else {
+                currentCategoryTitle.innerText = `${currentCategory}`;
+            }
+        }
+
+        // Cart / Bill Estimator Logic
+        function addToCart(itemId) {
+            const item = menuItems.find(i => i.id === itemId);
+            if (!item) return;
+
+            const existing = cart.find(c => c.id === itemId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+
+            updateCartUI();
+            
+            // Subtle toast / trigger cart open if first item
+            if (cart.length === 1) {
+                toggleCartDrawer(true);
+            }
+        }
+
+        function updateCartQuantity(itemId, delta) {
+            const idx = cart.findIndex(c => c.id === itemId);
+            if (idx > -1) {
+                cart[idx].quantity += delta;
+                if (cart[idx].quantity <= 0) {
+                    cart.splice(idx, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalBadge = document.getElementById('cartCountBadge');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const taxEl = document.getElementById('cartTax');
+            const totalEl = document.getElementById('cartTotal');
+
+            const totalCount = cart.reduce((acc, curr) => acc + curr.quantity, 0);
+            totalBadge.innerText = totalCount;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-2 text-slate-300"></i>
+                        <p class="text-sm">Your plate is currently empty.</p>
+                        <p class="text-xs text-slate-400 mt-1">Tap standard dishes to add to your order estimation.</p>
+                    </div>
+                `;
+                subtotalEl.innerText = '₹0';
+                taxEl.innerText = '₹0';
+                totalEl.innerText = '₹0';
+                return;
+            }
+
+            let subtotal = 0;
+            container.innerHTML = cart.map(c => {
+                const itemTotal = c.price * c.quantity;
+                subtotal += itemTotal;
+                return `
+                    <div class="py-2.5 flex items-center justify-between gap-2">
+                        <div class="flex-grow">
+                            <h5 class="text-xs font-bold text-slate-800">${c.name}</h5>
+                            <p class="text-[11px] text-slate-500">₹${c.price} x ${c.quantity} = <span class="font-semibold text-slate-700">₹${itemTotal}</span></p>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-slate-100 rounded-lg p-1">
+                            <button onclick="updateCartQuantity(${c.id}, -1)" class="w-6 h-6 flex items-center justify-center bg-white rounded text-slate-700 text-xs font-bold shadow-sm">-</button>
+                            <span class="text-xs font-bold px-1">${c.quantity}</span>
+                            <button onclick="updateCartQuantity(${c.id}, 1)" class="w-6 h-6 flex items-center justify-center bg-white rounded text-slate-700 text-xs font-bold shadow-sm">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const tax = Math.round(subtotal * 0.05); // 5% GST
+            const grandTotal = subtotal + tax;
+
+            subtotalEl.innerText = `₹${subtotal}`;
+            taxEl.innerText = `₹${tax}`;
+            totalEl.innerText = `₹${grandTotal}`;
+        }
+
+        function toggleCartDrawer(forceOpen = false) {
+            const drawer = document.getElementById('cartDrawer');
+            if (forceOpen) {
+                drawer.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.toggle('translate-x-full');
+            }
+        }
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.toggle('hidden');
+        }
+
+        function copyOrderSummary() {
+            if (cart.length === 0) return;
+            
+            let text = "🍽️ *Ruchi's Restaurant - Order Request*\n\n";
+            let subtotal = 0;
+            cart.forEach(item => {
+                const total = item.price * item.quantity;
+                subtotal += total;
+                text += `• ${item.name} x${item.quantity} - ₹${total}\n`;
+            });
+            
+            const tax = Math.round(subtotal * 0.05);
+            text += `\n*Subtotal:* ₹${subtotal}`;
+            text += `\n*GST (5%):* ₹${tax}`;
+            text += `\n*Estimated Total:* ₹${subtotal + tax}`;
+            text += `\n\nThank you for dining at Ruchi's!`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Order summary copied to clipboard! You can now paste it into WhatsApp or notes.");
+            });
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            filterByStyle('All');
+        });
+    </script>
+</body>
+</html>
